@@ -1,0 +1,51 @@
+.todo-list{
+    height: 400px;
+    border: 1px solid grey;    
+    height: 400px;
+    margin-left: 350px;
+    margin-top:30px;
+    width: 400px;
+}
+.header{
+    border-bottom: 1px solid grey;
+    padding: 15px;
+}
+ul{
+    list-style-type: none;
+}
+.checked{
+    padding-right: 10px;
+}
+
+li{
+    padding: 5px;
+    text-align: left;
+}
+
+li.completed{
+    text-decoration: line-through;
+    text-decoration-color: red;
+}
+
+img{
+    float: right;
+    height: 20px;
+    padding-right: 20px;
+}
+
+input[type="text"]{
+    margin: 0;
+    font-size: 18px;
+    line-height: 18px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 6px;
+    font-family: Lato, sans-serif;
+    color: #888;
+}
+
+input[type="text"]:focus {
+    color: #333;
+  }
