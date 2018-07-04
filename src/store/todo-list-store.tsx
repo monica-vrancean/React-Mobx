@@ -2,9 +2,10 @@
 import { TodoModel, TodoItemStatus } from '../models/todo-model';
 import { observable, computed, action } from 'mobx';
 import { FilterTypes } from '../models/Filter-types';
+import { TodoItemStore } from './todo-item-store';
 
-export class TodoStore{
-    @observable todos:TodoModel[] = [];
+export class TodoListStore{
+    @observable todos:TodoItemStore[] = [];
     @observable filter: FilterTypes = FilterTypes.All;
     @computed get getTodos(){
         switch(this.filter){
@@ -19,10 +20,9 @@ export class TodoStore{
     }
 
     public addTodo(todo: string){
-      let newTodos = [...this.todos, new TodoModel(todo)];
-     // newTodos.push(new TodoModel(todo));
-      this.todos =  newTodos;
-      console.log(this.todos)
+      //let newTodos = [...this.todos, new TodoModel(todo)];
+      this.todos.push(new TodoItemStore(todo));
+      console.log(this.todos);
     }
 
     public deleteTodo(todoTitle: string){
@@ -30,14 +30,11 @@ export class TodoStore{
     }
 
     public completeTodo(todoTitle:string){
-        let newTodos = [...this.todos];
-        newTodos.map(todo=>todo.title === todoTitle ? todo.status= TodoItemStatus.completed : todo);
-        this.todos = newTodos;
+        this.todos.map(todo=>todo.title === todoTitle ? todo.status= TodoItemStatus.completed : todo);
     }
 
     public editTodo(todoTitle:string){
-        let newTodos =[...this.todos];
-        let editTodo = newTodos.find(todo=>todo.title === todoTitle);
+        let editTodo = this.todos.find(todo=>todo.title === todoTitle);
         if(editTodo){
             editTodo.isEditable = true;
         }
@@ -48,8 +45,7 @@ export class TodoStore{
     }
 
     public updateTodo(newTodoValue: string){
-        let newTodos =[...this.todos];
-        let editableTodo = newTodos.find(todo=>todo.isEditable);
+        let editableTodo = this.todos.find(todo=>todo.isEditable);
         if(editableTodo){
             editableTodo.title = newTodoValue;
             editableTodo.isEditable = false;
@@ -58,10 +54,11 @@ export class TodoStore{
 
     @action
     public resetEditableTodo(){
-        let newTodos =[...this.todos];
-        let editableTodo = newTodos.find(todo=>todo.isEditable);
+        let editableTodo = this.todos.find(todo=>todo.isEditable);
         if(editableTodo){
             editableTodo.isEditable = false;
         }
     }
 }
+
+export default new TodoListStore();

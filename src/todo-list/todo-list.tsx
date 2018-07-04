@@ -1,4 +1,4 @@
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import './todo-list.css';
 
@@ -6,20 +6,21 @@ import './todo-list.css';
 import * as React from 'react';
 
 import Button from '../shared/button/button';
-import { TodoStore } from '../store/store';
+import { TodoListStore } from '../store/todo-list-store';
 import * as classNames from 'classnames';
 import { TodoItemStatus, TodoModel } from '../models/todo-model';
 import { FilterTypes } from '../models/Filter-types';
 import { action } from 'mobx';
 
 interface Props{
-  store:TodoStore;
+  store:TodoListStore;
 }
 
+@inject('store')
 @observer
-class TodoList extends React.Component<Props> {
+class TodoList extends React.Component {
   private inputRef: React.RefObject<HTMLInputElement>
-   store: TodoStore;
+   store: TodoListStore;
 
    constructor(props:Props){
       super(props);
