@@ -6,7 +6,7 @@ import './todo-list.css';
 import * as React from 'react';
 
 import Button from '../shared/button/button';
-import { TodoListStore } from '../store/todo-list-store';
+import { TodoListViewModel } from '../view-models/todo-list-view-model';
 import * as classNames from 'classnames';
 import { TodoItemStatus, TodoModel } from '../models/todo-model';
 import { FilterTypes } from '../models/Filter-types';
@@ -14,20 +14,19 @@ import { action } from 'mobx';
 import TodoItemComponent from './todo-item/todo-item';
 
 interface Props{
-  store:TodoListStore;
+  todoListViewModel:TodoListViewModel;
 }
 
-@inject('store')
+@inject('todoListViewModel')
 @observer
 class TodoList extends React.Component {
   private inputRef: React.RefObject<HTMLInputElement>
-   store: TodoListStore;
+   store: TodoListViewModel;
 
    constructor(props:Props){
       super(props);
-      this.store = props.store;
+      this.store = props.todoListViewModel;
       this.inputRef = React.createRef();
-      //this.deleteTodo = this.deleteTodo.bind(this);
   }
 
   addTodo(){
@@ -39,7 +38,6 @@ class TodoList extends React.Component {
 
   deleteTodo(todoTitle:string){
     this.store.deleteTodo(todoTitle);
-    console.log('delete')
   }
 
   completeTodo(todoTitle:string){
@@ -92,9 +90,9 @@ class TodoList extends React.Component {
         <Button value="Completed" isActive={()=>this.isFilterActive(FilterTypes.Completed)} onClick={this.showCompleted.bind(this)}/>
         <Button value="Active" isActive={()=>this.isFilterActive(FilterTypes.Active)} onClick={this.showActive.bind(this)}/>
         <ul>
-        {this.store.getTodos.map((todo, index)=>{
-          return <TodoItemComponent key={index} store={todo} deleteTodo={this.deleteTodo.bind(this)}/>
-        })}
+          {this.store.getTodos.map((todo, index)=>{
+            return <TodoItemComponent key={index} todoItem={todo} deleteTodo={this.deleteTodo.bind(this)}/>
+          })}
         </ul>
       </div>
     );

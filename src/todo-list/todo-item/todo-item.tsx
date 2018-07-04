@@ -1,4 +1,4 @@
-import { TodoItemStore } from "../../store/todo-item-store";
+import { TodoItemViewModel } from "../../view-models/todo-item-view-model";
 import { observer } from "mobx-react";
 import * as React from "react";
 import { action } from "mobx";
@@ -6,17 +6,17 @@ import * as classNames from "classnames";
 import { TodoItemStatus } from "../../models/todo-model";
 
 interface Props{
-  store:TodoItemStore;
+  todoItem:TodoItemViewModel;
   deleteTodo:Function;
 }
 
 @observer
 class TodoItemComponent extends React.Component<Props> {
-   store: TodoItemStore;
+   store: TodoItemViewModel;
 
    constructor(props:Props){
       super(props);
-      this.store = props.store;      
+      this.store = props.todoItem;      
   }
 
 

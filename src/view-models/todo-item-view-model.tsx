@@ -3,7 +3,7 @@ import { TodoModel, TodoItemStatus } from '../models/todo-model';
 import { observable, computed, action } from 'mobx';
 import { FilterTypes } from '../models/Filter-types';
 
-export class TodoItemStore{
+export class TodoItemViewModel{
     @observable public title: string;
     @observable public status: TodoItemStatus;
     @observable public isEditable:boolean;
